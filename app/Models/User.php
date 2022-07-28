@@ -49,9 +49,18 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Lesson::class);
     }
 
+    public function certificates()
+    {
+        return $this->hasMany(Certificate::class);
+    }
+
+    public function progress()
+    {
+        return $this->hasMany(Progress::class);
+    }
+
     public function sendApiEmailVerificationNotification()
     {
         $this->notify(new VerifyApiEmail);
     }
-    
 }

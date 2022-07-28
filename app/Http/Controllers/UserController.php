@@ -19,9 +19,16 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $user = User::with('lesson')->get();
+        $role = $request->role;
+        if ($role === 'teacher') {
+            $user = User::with('lesson')
+                ->where('role', '=', $role)->get();
+        } else {
+            $user = User::with('lesson', 'certificates', 'progress')
+                ->where('role', '=', $role)->get();
+        }
         return $user;
     }
 
