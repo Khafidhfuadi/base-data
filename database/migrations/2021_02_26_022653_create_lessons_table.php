@@ -20,6 +20,7 @@ class CreateLessonsTable extends Migration
             $table->string('guru');
             $table->string('tingkatan');
             $table->text('deskripsi');
+            $table->integer('is_active')->default(2);
             $table->timestamps();
         });
     }

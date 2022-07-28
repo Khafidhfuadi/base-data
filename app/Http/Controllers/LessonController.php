@@ -19,14 +19,20 @@ class LessonController extends Controller
     {
         $cari = $request->cari;
         $role = $request->role;
-        if ($cari) {
+
+        if ($role === 'teacher') {
+            if ($cari) {
+                $lesson = Lesson::with('Chapter', 'Quiz')->where('user_id', '=', $cari)->get();
+                $lesson = count($lesson);
+            } else {
+                $lesson = Lesson::with('Chapter', 'Quiz')->get();
+            }
+        } else if ($cari) {
             $lesson = Lesson::with(['Chapter', 'Progress' => function ($query) use ($cari) {
                 $query->where('user_id', '=', $cari);
             }])->where('is_active', '=', 1)->get();
-        } else if ($role === 'admin' || $role === 'teacher') {
-            $lesson = Lesson::with('Chapter', 'Quiz', 'Progress')->get();
         } else {
-            $lesson = Lesson::with('Chapter', 'Quiz', 'Progress')->where('is_active', '=', 1)->get();
+            $lesson = Lesson::with('Chapter', 'Quiz', 'Progress')->get();
         }
         return $lesson;
     }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCertificatesTable extends Migration
+class CreateProgressTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateCertificatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('certificates', function (Blueprint $table) {
+        Schema::create('progress', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id');
-            $table->string('lesson_id');
-            $table->integer('nilai_ujian');
+            $table->integer('user_id')->unsigned();
+            $table->integer('lesson_id');
+            $table->integer('read_chapter');
+            $table->integer('length_chapter');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateCertificatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('certificates');
+        Schema::dropIfExists('progress');
     }
 }
